@@ -5,11 +5,18 @@ module.exports = function(grunt) {
 
     "handlebars-expand": {
       test: {
-        // Expand the main template.
         main: {
           data: { name: "some-test" },
           dest: "out/raw.txt",
           type: "raw"
+        }
+      },
+
+      multifile: {
+        main: {
+          dest: "out/",
+          src:  ["sources/*.txt"],
+          type: "multi-file"
         }
       }
     }

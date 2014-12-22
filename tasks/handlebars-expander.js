@@ -27,11 +27,14 @@ module.exports = function(grunt) {
   var utils      = require("./helpers/utils");
 
   // Map of expand types to expand function.
-  var raw = require("./processors/raw");
+  var file = require("./processors/file");
+  var raw  = require("./processors/raw");
   var EXPAND_TYPES = {
-    raw: raw.single,
+    file: file.single,
+    raw:  raw.single,
 
-    "multi-raw": raw.multi
+    "multi-file": file.multi,
+    "multi-raw":  raw.multi
   };
 
 
