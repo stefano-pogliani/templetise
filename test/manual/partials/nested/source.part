@@ -1,0 +1,5 @@
+<source>
+  type file
+  path /some/base/log/path/{{file}}
+  pos  /some/base/pos/path/{{file}}
+</source>
