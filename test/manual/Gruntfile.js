@@ -14,8 +14,9 @@ module.exports = function(grunt) {
 
       multifile: {
         main: {
+          cwd:  "sources/",
           dest: "out/",
-          src:  ["sources/*.txt"],
+          src:  ["*.txt"],
           type: "multi-file"
         }
       }
