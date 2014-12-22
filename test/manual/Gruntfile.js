@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON("../package.json"),
+    pkg: grunt.file.readJSON("../../package.json"),
 
     "handlebars-expand": {
       test: {
@@ -16,5 +16,5 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.loadTasks("../tasks");
+  grunt.loadTasks("../../tasks");
 };
