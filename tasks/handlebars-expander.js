@@ -44,12 +44,15 @@ module.exports = function(grunt) {
       function() {
     var helpers   = utils.scanDirectory("helpers",   "js");
     var partials  = utils.scanDirectory("partials",  "part");
+    var plugins   = utils.scanDirectory("plugins",   "js");
     var templates = utils.scanDirectory("templates", "temp");
 
     var handlebars = Handelbars.create();
     handlebars.templates = {};
 
     load.helpers(helpers, handlebars, 8);
+    load.plugins(plugins, handlebars);
+
     load.partials(partials, handlebars, 9);
     load.templates(templates, handlebars, 10);
 

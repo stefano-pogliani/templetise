@@ -38,6 +38,18 @@ load.partials = function(files, handlebars, strip) {
   }
 };
 
+//! Loads a list of plugins to extend the handlebars engine.
+/*!
+ * \param {!Array.<String>} files      The array of files to load.
+ * \param {!Object}        handlebars The enginge to update.
+ */
+load.plugins = function(files, handlebars) {
+  for (var idx = 0; idx < files.length; idx++) {
+    var plugin = require(path.resolve(files[idx]));
+    plugin(handlebars);
+  }
+};
+
 
 //! Loads a list of templates into the handlebars engine.
 /*!
