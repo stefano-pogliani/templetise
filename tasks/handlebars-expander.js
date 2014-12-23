@@ -42,19 +42,35 @@ module.exports = function(grunt) {
       "handlebars-expand",
       "A grunt task to compile and run handlebars templates offline.",
       function() {
-    var helpers   = utils.scanDirectory("helpers",   "js");
-    var partials  = utils.scanDirectory("partials",  "part");
-    var plugins   = utils.scanDirectory("plugins",   "js");
-    var templates = utils.scanDirectory("templates", "temp");
+    var options = this.options({
+      helpers_dir:   "helpers",
+      partials_dir:  "partials",
+      partials_ext:  "part",
+      plugins_dir:   "plugins",
+      templates_dir: "templates",
+      templates_ext: "temp"
+    });
+
+    var helpers_dir   = options.helpers_dir;
+    var partials_dir  = options.partials_dir;
+    var partials_ext  = options.partials_ext;
+    var plugins_dir   = options.plugins_dir;
+    var templates_dir = options.templates_dir;
+    var templates_ext = options.templates_ext;
+
+    var helpers   = utils.scanDirectory(helpers_dir,   "js");
+    var partials  = utils.scanDirectory(partials_dir,  partials_ext);
+    var plugins   = utils.scanDirectory(plugins_dir,   "js");
+    var templates = utils.scanDirectory(templates_dir, templates_ext);
 
     var handlebars = Handelbars.create();
     handlebars.templates = {};
 
-    load.helpers(helpers, handlebars, 8);
+    load.helpers(helpers, handlebars, helpers_dir.length + 1);
     load.plugins(plugins, handlebars);
 
-    load.partials(partials, handlebars, 9);
-    load.templates(templates, handlebars, 10);
+    load.partials(partials,   handlebars, partials_dir.length + 1);
+    load.templates(templates, handlebars, templates_dir.length + 1);
 
     var data = this.data || {};
     var map  = data.expand || data;
