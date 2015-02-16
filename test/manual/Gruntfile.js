@@ -3,7 +3,9 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON("../../package.json"),
 
-    "handlebars-expand": {
+    "templetise": {
+      options: { partials_dir: "partials" },
+
       test: {
         main: {
           data: { name: "some-test" },

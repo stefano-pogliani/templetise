@@ -1,6 +1,6 @@
-Handlebars Expander
-===================
-A grunt task to compile and run handlebars templates offline.
+Templetise
+==========
+Convert any file into a template.
 
 Motivation
 ----------
@@ -75,6 +75,57 @@ module.exports = function(handlebars) {
 ```
 
 ### Partials
+Partials provide access to Handlebars standard `partials` feature.
+A lot of information about partials is provided everywhere on the internet
+so I will not discuss them.
+
+Partials are named after the file that contains their definition and its path
+relative to the `partials` directory.
+As names cannot contain `/` characters these are replaced by `-`.
+For example a file in `partials/debug/outputs.part` would result in a
+partial called `debug-outputs`.
 
 ### Templates
+Templates are the starting point of every use.
+Like partials, templates are just Handlebars templates that are loaded
+and complied for you to use.
 
+Template naming follows the same rules as partials.
+
+Usage
+-----
+TODO
+
+Using as Grunt Task
+-----
+As this is a Grunt (multi-)task you will need a `Gruntfile.js` file and
+all the magic will happen in the target configuration.
+
+For example, the following will fill the `debug-host` template with the
+data from files matching the `data/*.conf` glob:
+```javascript
+"handlebars-expand": {
+  debug: {
+    "debug-host": {
+      cwd:  "data/",
+      dest: "out/",
+      src:  ["*.conf"],
+      type: "multi-file"
+    }
+  }
+}
+```
+
+The `debug-host` template is associated to a data specification
+that describes the file or files fed to the template and used to
+generate the final files.
+
+### Types and structures.
+Several type of data specifications (`type`s) are available and the arguments
+depend on such type but all data specifications have the following attributes:
+
+| Attribute | Description                                                    |
+| --------- | -------------------------------------------------------------- |
+| type      | The type of data specification associated. See the lest below. |
+| dest      | The destination for the result. The actual value of this       |
+| :         | attribute depends on the type of attribute itself.             |

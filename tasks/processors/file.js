@@ -1,18 +1,14 @@
 var path  = require("path");
-var utils = require("../helpers/utils");
 var file  = module.exports = {};
 
 
-file.single = function(grunt, name, spec, handelbars) {
-  var template = handelbars.templates[name];
-  var data     = grunt.file.readJSON(spec.src);
-  utils.writeOutput(grunt, spec.dest, template, data);
+file.single = function(grunt, name, spec, templetise) {
+  var data = grunt.file.readJSON(spec.src);
+  grunt.file.write(spec.dest, templetise.apply(name, data));
 };
 
-file.multi = function(grunt, name, spec, handelbars) {
-  var template = handelbars.templates[name];
-  var options  = {};
-
+file.multi = function(grunt, name, spec, templetise) {
+  var options = {};
   if (spec.cwd) { options.cwd = spec.cwd;  }
   var sources = grunt.file.expand(options, spec.src);
 
@@ -22,7 +18,6 @@ file.multi = function(grunt, name, spec, handelbars) {
 
     if (spec.cwd) { source = path.join(spec.cwd, source); }
     var data = grunt.file.readJSON(source);
-
-    utils.writeOutput(grunt, output, template, data);
+    grunt.file.write(output, templetise.apply(name, data));
   }
 };

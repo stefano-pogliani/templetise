@@ -1,14 +1,34 @@
 {
-  "name":        "handlebars-expander",
-  "version":     "0.0.0",
-  "description": "A grunt task to compile and run handlebars templates offline.",
+  "author": "Stefano Pogliani",
+  "description": "Convert any file into a template.",
+  "license": "BSD",
+  "name": "templetise",
+  "version": "0.0.0",
+
+  "main": "templetise.js",
+
+  "directories": {
+    "test": "test"
+  },
 
   "dependencies": {
     "handlebars": "~2.0.0"
   },
 
   "devDependencies": {
-    "grunt":                   "~0.4.5",
-    "grunt-contrib-jshint":    "~0.8.0"
-  }
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.8.0"
+  },
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "keywords": [
+    "handlebars",
+    "template",
+    "grunt",
+    "tools",
+    "configuration"
+  ]
 }
