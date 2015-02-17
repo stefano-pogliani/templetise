@@ -13,12 +13,19 @@ var utils = module.exports = {};
  * @returns {!String} A name that is usable as handlebars identifier.
  */
 utils.escapeName = function escapeName(name, ext_len, strip) {
+  if (!name) {
+    throw new Error("Missing parameter: name to escape.");
+  }
+  if (!ext_len && ext_len !== 0) {
+    throw new Error("Missing parameter: extension length.");
+  }
+
   name = name.replace(/[\/+]/g, "-");
   return name.substring(strip || 0, name.length - ext_len);
 };
 
 /**
- * TODO(stefano): document.
+ * Apply a callback to each element in an array.
  * @param {!Array}    array    The array to iterate over.
  * @param {!Function} callback The function to call with each item.
  * @param {Object}    context  The this context for the callback.
