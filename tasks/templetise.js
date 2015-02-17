@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 
 
   grunt.registerMultiTask("templetise", "???.", function() {
-    var data = this.data || {};
+    var data = this.data || [];
     var map  = data.expand || data;
     var templetise = new Templetise(this.options({
       log: grunt.log.verbose.ok
@@ -22,12 +22,10 @@ module.exports = function(grunt) {
 
     templetise.initialise();
 
-    for (var name in map) {
-      if (!map.hasOwnProperty(name)) { continue; }
-
+    for (var idx = 0; idx < map.length; idx++) {
       try {
-        var spec = map[name];
-        EXPAND_TYPES[spec.type](grunt, name, spec, templetise);
+        var spec = map[idx];
+        EXPAND_TYPES[spec.type](grunt, spec, templetise);
       } catch (ex) {
         console.error(ex.stack);
         throw ex;

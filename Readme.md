@@ -2,6 +2,7 @@ Templetise
 ==========
 Convert any file into a template.
 
+
 Motivation
 ----------
 If you ever used (FluentD)[http://www.fluentd.org/] you might have noticed
@@ -12,6 +13,7 @@ but you have to write it repeatedly.
 Another example is (Apache)[http://httpd.apache.org/] VirtualHost configuration.
 If all of your virtual hosts share the same basic options why would you
 create them multiple times?
+
 
 Features
 --------
@@ -92,9 +94,11 @@ and complied for you to use.
 
 Template naming follows the same rules as partials.
 
+
 Usage
 -----
 TODO
+
 
 Using as Grunt Task
 -----
@@ -105,14 +109,13 @@ For example, the following will fill the `debug-host` template with the
 data from files matching the `data/*.conf` glob:
 ```javascript
 "handlebars-expand": {
-  debug: {
-    "debug-host": {
-      cwd:  "data/",
-      dest: "out/",
-      src:  ["*.conf"],
-      type: "multi-file"
-    }
-  }
+  debug: [{
+    cwd:      "data/",
+    dest:     "out/",
+    src:      ["*.conf"],
+    template: "debug-host",
+    type:     "multi-file"
+  }]
 }
 ```
 

@@ -6,22 +6,20 @@ module.exports = function(grunt) {
     "templetise": {
       options: { partials_dir: "partials" },
 
-      test: {
-        main: {
-          data: { name: "some-test" },
-          dest: "out/raw.txt",
-          type: "raw"
-        }
-      },
+      test: [{
+        data:     { name: "some-test" },
+        dest:     "out/raw.txt",
+        template: "main",
+        type:     "raw"
+      }],
 
-      multifile: {
-        main: {
-          cwd:  "sources/",
-          dest: "out/",
-          src:  ["*.txt"],
-          type: "multi-file"
-        }
-      }
+      multifile: [{
+        cwd:      "sources/",
+        dest:     "out/",
+        src:      ["*.txt"],
+        template: "main",
+        type:     "multi-file"
+      }]
     }
 
   });
