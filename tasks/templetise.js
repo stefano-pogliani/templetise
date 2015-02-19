@@ -13,7 +13,9 @@ module.exports = function(grunt) {
   };
 
 
-  grunt.registerMultiTask("templetise", "???.", function() {
+  grunt.registerMultiTask(
+      "templetise", "Template anything with Handlebars.",
+      function() {
     var data = this.data || [];
     var map  = data.expand || data;
     var templetise = new Templetise(this.options({

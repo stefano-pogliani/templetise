@@ -97,31 +97,73 @@ Template naming follows the same rules as partials.
 
 Usage
 -----
-TODO
+You can use Templetise as a library within your code in just four lines:
+```javascript
+var Templetise = require("templetise");
+
+var templetise = new Templetise();
+templetise.initialise();
+
+var content = templetise.apply("template-name", data_object);
+```
+
+You will need to extend this with your data generation/loading code
+and you could customise the instance by passing options to the constructor
+but for basic usage this is it.
+
+### Supported options:
+  * `helpers_dir` [default="helpers"]
+    directory to scan looking for helpers.
+
+  * `partials_dir` [default="templates"]
+    directory to scan looking for partial templates.
+
+  * `plugins_dir` [default="plugins"]
+    directory to scan looking for plug-ins.
+
+  * `templates_dir` [default="templates"]
+    directory to scan looking for templates.
+
+  * `partials_ext` [default="part"]
+    extension to filter partial templates by.
+
+  * `templates_ext` [default="temp"]
+    extension to filter templates by.
+
+  * `base_dir` [default="."]
+    Prefix this path to all directories.
+
+  * `no_escape` [default=true]
+    configure Handlebars to avoid escaping of HTML.
+
+  * `log` [log=NoOp]
+    function used to log loading of helpers, partials, plugins and
+    templates.
+    By default this function does nothing.
 
 
 Using as Grunt Task
------
-As this is a Grunt (multi-)task you will need a `Gruntfile.js` file and
-all the magic will happen in the target configuration.
+-------------------
+If what you are trying to do is build configuration files writing
+a Node.JS program to use a library is not a good approach.
 
-For example, the following will fill the `debug-host` template with the
-data from files matching the `data/*.conf` glob:
+For that reason a much simpler approach is available: using a Grunt task.
+This library comes with a Grunt (multi-)task that will allow you to
+process dynamically generated data or JSON files with your templates.
+
+For example, the following slice of Gruntfile configuration will fill the
+`debug-host` template with the data from files matching the `data/*.conf` glob:
 ```javascript
-"handlebars-expand": {
-  debug: [{
-    cwd:      "data/",
-    dest:     "out/",
-    src:      ["*.conf"],
-    template: "debug-host",
-    type:     "multi-file"
+"templetiser": {
+  "debug": [{
+    "cwd":      "data/",
+    "dest":     "out/",
+    "src":      ["*.conf"],
+    "template": "debug-host",
+    "type":     "multi-file"
   }]
 }
 ```
-
-The `debug-host` template is associated to a data specification
-that describes the file or files fed to the template and used to
-generate the final files.
 
 ### Types and structures.
 Several type of data specifications (`type`s) are available and the arguments
@@ -129,6 +171,41 @@ depend on such type but all data specifications have the following attributes:
 
 | Attribute | Description                                                    |
 | --------- | -------------------------------------------------------------- |
+| template  | The name of the template to use.                               |
 | type      | The type of data specification associated. See the lest below. |
 | dest      | The destination for the result. The actual value of this       |
-| :         | attribute depends on the type of attribute itself.             |
+|           | attribute depends on the type of attribute itself.             |
+
+What follows is a list of supported types and the parameters
+they expect and support.
+
+  * `file`
+    Requires a `src` string parameter with the path to a
+    JSON file with the input data.
+    The `dest` attribute is a string parameter with the
+    path to the output file.
+
+  * `raw`
+    The data for the template is found in the mandatory `data` attribute.
+    As for `file`, the `dest` attribute is a string with the path to the
+    output file.
+
+  * `multi-file`
+    Similar to `file` but acting over multiple files.
+
+    This time the `src` parameter is processed by `grunt.file.expand`
+    which means that multiple files and patterns can be passed.
+    The optional `cwd` attribute can be used to specify the path
+    to the base directory for the values in `src`.
+
+    The `dest` parameter is now the path to a directory where the output
+    files should be stored.
+    Keep in mind that the full structure (relative to `cwd` is duplicated).
+
+  * `multi-data`
+    Similar to `data` but where the `data` attribute is an array.
+    Each item in the array is passed to the template and used
+    to generate a different file.
+
+    The `dest` attribute is a list of strings, one for each item
+    in the `data` array, which are paths to the output files.

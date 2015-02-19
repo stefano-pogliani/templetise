@@ -9,7 +9,7 @@ file.single = function(grunt, spec, templetise) {
 
 file.multi = function(grunt, spec, templetise) {
   var options = {};
-  if (spec.cwd) { options.cwd = spec.cwd;  }
+  if (spec.cwd) { options.cwd = spec.cwd; }
   var sources = grunt.file.expand(options, spec.src);
 
   for (var idx = 0; idx < sources.length; idx++) {
