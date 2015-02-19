@@ -1,9 +1,20 @@
 {
-  "author": "Stefano Pogliani",
-  "description": "Convert any file into a template.",
-  "license": "BSD",
   "name": "templetise",
+  "description": "Convert any file into a template.",
   "version": "0.0.1",
+  "license": "BSD",
+
+  "author": {
+    "name" : "Stefano Pogliani",
+    "email" : "stefano@spogliani.net",
+    "url" : "http://spogliani.net/"
+  },
+
+  "bugs": "https://github.com/stefano-pogliani/templetise/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stefano-pogliani/templetise.git#rel-0.0.1"
+  },
 
   "main": "templetise.js",
 
