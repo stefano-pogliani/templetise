@@ -1,7 +1,7 @@
 {
   "name": "templetise",
-  "description": "Convert any file into a template.",
-  "version": "0.0.1",
+  "description": "Templates for configuration files.",
+  "version": "1.0.0",
   "license": "BSD",
 
   "author": {
@@ -13,17 +13,20 @@
   "bugs": "https://github.com/stefano-pogliani/templetise/issues",
   "repository": {
     "type": "git",
-    "url": "git://github.com/stefano-pogliani/templetise.git#rel-0.0.1"
+    "url": "git://github.com/stefano-pogliani/templetise.git#1.0.0"
   },
 
-  "main": "templetise.js",
 
-  "directories": {
-    "test": "test"
+  "main": "lib/index.js",
+  "bin": {
+    "mkconf": "./bin/templetise"
   },
+
 
   "dependencies": {
-    "handlebars": "~2.0.0"
+    "handlebars":  "~4.0.5",
+    "node-getopt": "~0.2.3",
+    "bluebird": "~3.1.5"
   },
 
   "devDependencies": {

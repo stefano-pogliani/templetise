@@ -1,0 +1,63 @@
+#!/bin/env node
+var getopt = require("node-getopt");
+var Templetise = require("../");
+
+
+// Build CLI parser.
+var parser = getopt.create([
+  ["h", "help", "display this help"],
+
+  // Data sources.
+  ["d", "data=FILE+",   "load json data from FILE"],
+  ["i", "inline=JSON+", "load json data from string"],
+
+  // Engine extensions.
+  ["", "helpers=FILE+", "register helpers module FILE"],
+  ["", "partial=NAME,FILE+", "register partial NAME with content of FILE"]
+
+]).bindHelp();
+
+
+// Parse options.
+var opts  = parser.parseSystem();
+var file  = opts.argv[0] || null;
+var options = opts.options;
+
+var data    = options.data    || [];
+var inline  = options.inline  || [];
+var helpers = options.helpers || [];
+var partial = options.partial || [];
+
+
+// Configure templetise.
+var templetise = new Templetise();
+
+data.forEach(function(file) {
+  templetise.data(file);
+});
+inline.forEach(function(string) {
+  templetise.inline(string);
+});
+
+helpers.forEach(function(file) {
+  if (file[0] !== "/") {
+    file = process.cwd() + "/" + file;
+  }
+  templetise.helpers(require(file));
+});
+
+partial.forEach(function(input) {
+  var pair = input.split(",", 2);
+  var name = pair[0];
+  var path = pair[1];
+  templetise.partial(name, path);
+});
+
+
+// Render template.
+if (file === null) {
+  throw Error("No template file specified");
+}
+templetise.renderTemplate(file).then(function(output) {
+  process.stdout.write(output);
+});
